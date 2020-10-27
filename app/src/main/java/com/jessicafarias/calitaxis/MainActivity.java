@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
     Usuario usuario = new Usuario();
     private EditText editTextNombre;
@@ -40,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
     public void SignIn(View view){
         integer = usuario.GetIdRegisteredUser(editTextNombre.getText().toString(), editTextContraseña.getText().toString());
         if (integer != 0) {
-            //Toast.makeText(main.this, "Bienvenenido :)", Toast.LENGTH_SHORT).show();
-            //Intent intent = new Intent(this, MapsActivity.class);
-            //intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
-            //intent.putExtra("ContraseñaMain", editTextContraseña.getText().toString());
-            //intent.putExtra("IDUSUARIO", integer);
-            //startActivity(intent);
+            Toast.makeText(MainActivity.this, "Bienvenenido :)", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
+            intent.putExtra("ContraseñaMain", editTextContraseña.getText().toString());
+            intent.putExtra("IDUSUARIO", integer);
+            startActivity(intent);
         } else {
             //Toast.makeText(main.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
 
@@ -53,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Register(View view) {
-        //Intent intent = new Intent(this, Registration.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, Registration.class);
+        startActivity(intent);
 
     }
 
@@ -62,12 +64,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-        ///    Intent intent = new Intent(this, MapsActivity.class);
-        //    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //    startActivity(intent);
-        //}
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+           Intent intent = new Intent(this, MapsActivity.class);
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+           startActivity(intent);
+        }
     }
 
 }
